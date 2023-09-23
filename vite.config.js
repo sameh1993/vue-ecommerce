@@ -23,7 +23,8 @@ export default defineConfig({
     alias: {
       "@": fileURLToPath(new URL("./src", import.meta.url)),
       $: fileURLToPath(
-        new URL("./node_modules/jquery/dist/jquery.min.js", import.meta.url)
+        // new URL("./node_modules/jquery/dist/jquery.min.js", import.meta.url)
+        new URL("@/assets/js/jquery-1.11.1.min.js", import.meta.url)
       ),
     },
   },

@@ -1,35 +1,11 @@
 <script setup>
-import logoComponent from "@/components/header/logo.vue";
-import navbar from "@/components/header/navbar.vue";
-import footerComponent from "@/components/footer.vue";
-import cart from "@/components/content/cart.vue";
-import { RouterView } from "vue-router";
 import { useNotification } from "@kyvg/vue3-notification";
-import { useCartsStore } from "@/stores/carts.js";
-import { useAuthStore } from "@/stores/auth.js";
 import { ref, onMounted, computed } from "vue";
 import WOW from "wow.js/dist/wow";
+import sidebar from "@/components/sidebar.vue";
+import navbar from "@/components/header/navbar.vue";
 
-const cartStore = useCartsStore();
-const authStore = useAuthStore();
-const { notify } = useNotification();
-
-const names = ref([
-  { name: "sameh sayed", age: 30 },
-  { name: "ahmed sayed", age: 23 },
-  { name: "heba sayed", age: 26 },
-]);
-
-const getTotal = computed(() => {
-  return cartStore.gettotalRevence;
-});
-
-const idToken = computed(() => authStore.isIdToken);
-
-function getIndex(ourArray) {
-  const filter = names.value.filter((res) => res.age == 23);
-  return names.value.indexOf(filter[0]);
-}
+// importted components
 
 onMounted(() => {
   new WOW().init();
@@ -38,51 +14,33 @@ onMounted(() => {
 
 <template>
   <div class="app">
-    <header class="wow slideInLeft" data-wow-duration="2s" data-wow-delay="3s">
-      {{ getTotal }}
-      <!-- start logo -->
-      <logoComponent />
+    <div class="main-content">
+      <!--left-fixed -navigation-->
+      <sidebar />
+      <!--left-fixed -navigation-->
 
-      <!-- start navbar -->
       <navbar />
-    </header>
 
-    <!--- start router -->
-    <router-view v-slot="{ Component, route }">
-      <transition name="fade">
-        <component :is="Component" :key="route.path" />
-      </transition>
-    </router-view>
+      <!-- main content start-->
+      <div class="page-wrapper bg-light" id="page-wrapper">
+        <router-view v-slot="{ Component, route }">
+          <transition name="fade">
+            <component :is="Component" :key="route.path" />
+          </transition>
+        </router-view>
+      </div>
+    </div>
 
-    <!-- start footer -->
-    <footerComponent />
-
-    <cart />
-
+    <!-- start notifation comp -->
     <notifications position="top right" />
   </div>
 </template>
 
-<style lang="scss" scoped>
-@import "wow.js/css/site.css";
-
-header {
-  text-align: center;
-
-  i {
-    color: #fff;
+<style lang="scss">
+.page-wrapper {
+  section {
+    background-color: #fff;
+    box-shadow: var(--mainShadow);
   }
-}
-
-i {
-  color: #fff;
-}
-
-body {
-  overflow: hidden;
-}
-
-.vue-notification-group {
-  margin: 20px;
 }
 </style>

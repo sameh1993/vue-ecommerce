@@ -14,52 +14,94 @@ const router = createRouter({
       component: HomeView,
     },
     {
-      path: "/:department/:mainCategory",
-      name: "department name",
-      component: () => import("../views/test.vue"),
-    },
-    {
-      path: "/product/:name",
-      name: "product",
-      component: () => import("@/views/single-product.vue"),
-    },
-    {
-      path: "/contactus",
-      name: "contact us",
-      component: () => import("../views/contact.vue"),
-    },
-    {
-      path: "/wishlist",
-      name: "wishlist",
-      component: () => import("@/views/cart-page.vue"),
-    },
-    {
-      path: "/product/:item",
-      name: "product details",
-      component: () => import("../views/single-product.vue"),
-      props: true,
-    },
-    {
-      path: "/auth",
-      component: () => import("@/views/register.vue"),
+      path: "/invoice",
+      name: "invoice",
       children: [
         {
-          path: "register",
-          name: "register",
-          component: () => import("@/components/auth/signup.vue"),
+          path: "add",
+          name: "انشاء فاتوره",
+          component: () => import("@/components/invoice/add-invoice.vue"),
         },
         {
-          path: "login",
-          name: "login",
-          component: () => import("@/components/auth/login.vue"),
+          path: "update",
+          name: "add invoice",
+          children: [
+            { path: "search", name: "search invoice", import("@/components/invoice/search-invoice.vue") },
+            { path: "search", name: "search invoice", import("@/components/invoice/update-invoice.vue") },
+          ]
+        },
+        {
+          path: "view",
+          name: "add invoice",
+          component: () => import("@/components/invoice/all-invoice.vue"),
+        },
+
+        {
+          path: "search",
+          name: "ابحث بالكود",
+          component: () => import("@/components/invoice/search-invoice.vue"),
         },
       ],
     },
     {
-      path: "/catchAll(.*)*",
-      name: "not found",
-      component: () => import("@/views/not-found-page.vue"),
+      path: "/store",
+      name: "store",
+      children: [
+        {
+          path: "add",
+          name: "اضافه صنف جديد",
+          component: () => import("@/components/store/add-product.vue"),
+        },
+        {
+          path: "search",
+          name: "استعلام عن سنف",
+          component: () => import("@/components/store/search-product.vue"),
+        },
+
+        {
+          path: "update",
+          name: "تعديل صنف",
+          component: () => import("@/components/store/edit-product.vue"),
+        },
+        {
+          path: "details",
+          name: "كارت صنف",
+          component: () => import("@/components/store/details-product.vue"),
+        },
+      ],
     },
+    {
+      path: "/supplier",
+      children: [
+        {
+          path: "",
+          name: "استعلام عن مورد",
+          component: () => import("@/components/suppliers/search-supplier.vue"),
+        },
+        {
+          path: "add",
+          name: "أضافه مورد",
+          component: () => import("@/components/suppliers/add-supplier.vue"),
+        },
+        {
+          path: "update",
+          name: "تعديل مورد",
+          component: () => import("@/components/suppliers/edit-supplier.vue"),
+        },
+        {
+          path: "details",
+          name: "بيانات الموارد",
+          component: () =>
+            import("@/components/suppliers/details-supplier.vue"),
+        },
+      ],
+    },
+
+    // {
+    //   path: "/catchAll(.*)*",
+    //   name: "not found",
+    //   component: () => import("@/views/not-found-page.vue"),
+    // },
   ],
 });
 
